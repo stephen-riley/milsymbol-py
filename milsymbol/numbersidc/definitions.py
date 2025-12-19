@@ -1,0 +1,78 @@
+from .sidc import (
+    common,
+    air,
+    airmissile,
+    space,
+    spacemissile,
+    landunit,
+    landcivilian,
+    landequipment,
+    landinstallation,
+    sea,
+    subsurface,
+    minewarfare,
+    activites,
+    signalsintelligence,
+    cyberspace,
+    dismountedindividual,
+    control_measure,
+)
+
+# Rename to match JS exports where needed
+tacticalpoints = control_measure
+
+app6d = [
+    air.exports,
+    airmissile.exports,
+    space.exports,
+    spacemissile.exports,
+    landunit.exports,
+    landcivilian.exports,
+    landequipment.exports,
+    landinstallation.exports,
+    sea.exports,
+    subsurface.exports,
+    minewarfare.exports,
+    activites.exports,
+    signalsintelligence.exports,
+    dismountedindividual.exports,
+    tacticalpoints.exports,
+]
+
+std2525d = [
+    air.exports,
+    airmissile.exports,
+    space.exports,
+    spacemissile.exports,
+    landunit.exports,
+    landcivilian.exports,
+    landequipment.exports,
+    landinstallation.exports,
+    sea.exports,
+    subsurface.exports,
+    minewarfare.exports,
+    activites.exports,
+    signalsintelligence.exports,
+    cyberspace.exports,
+    tacticalpoints.exports,
+]
+
+std2525e = [
+    common.exports,
+    air.exports,
+    airmissile.exports,
+    space.exports,
+    spacemissile.exports,
+    landunit.exports,
+    landcivilian.exports,
+    landequipment.exports,
+    landinstallation.exports,
+    sea.exports,
+    subsurface.exports,
+    minewarfare.exports,
+    activites.exports,
+    signalsintelligence.exports,
+    dismountedindividual.exports,
+    cyberspace.exports,
+    tacticalpoints.exports,
+]
