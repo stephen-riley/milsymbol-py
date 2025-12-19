@@ -222,7 +222,7 @@ def landequipment(ms, sId, sIdm1, sIdm2, bbox, symbolSet, icn, _STD2525, edition
         sId["120111"] = [
             icn["GR.EQ.ARMOURED FIGHTING VEHICLE"],
             icn["GR.EQ.CROSS-COUNTRY"],
-            icn["GR.IC.FF.RECONNAISSANCE EQUPIMENT"],
+            icn["GR.IC.FF.RECONNAISSANCE EQUIPMENT"],
         ]
         sId["120200"] = [icn["GR.EQ.TANK"]]
         sId["120201"] = [icn["GR.EQ.TANK"], icn["GR.EQ.LIGHT TANK"]]

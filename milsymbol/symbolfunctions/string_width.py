@@ -163,7 +163,12 @@ strWidths = {
 
 
 def string_width(s, fontSize, spaceTextIcon):
-    if not s or len(s) == 0:
+    if not s or s == "":
+        return 0
+
+    s = str(s)
+
+    if len(s) == 0:
         return 0
     # We need to calculate how long our string will be in pixels
     w = 0

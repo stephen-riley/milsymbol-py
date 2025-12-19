@@ -11,7 +11,7 @@ def geticons(symbol, ms, symbolSet, iconParts, STD2525, edition):
             # (symbol, sId, sIdm1, sIdm2, bbox, symbolSet, icn, _STD2525, edition)
             # We assume we pass symbol as first arg, just in case, though usually unused.
             func(
-                symbol,
+                ms,
                 iconSIDC,
                 iconModifier1,
                 iconModifier2,

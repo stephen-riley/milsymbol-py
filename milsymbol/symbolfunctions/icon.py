@@ -157,6 +157,7 @@ def icon(symbol, ms):
                 if callable(get_icons_number):
                     # ms._getIcons.number(ms, symbolSet, iconParts, STD2525, edition)
                     ret = get_icons_number(
+                        symbol,
                         ms,
                         symbolSet,
                         iconParts,

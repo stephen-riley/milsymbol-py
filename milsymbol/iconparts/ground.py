@@ -3076,9 +3076,21 @@ def ground(ms, iconParts, metadata, colors, STD2525, monoColor, alternateMedal):
         "d": "M 75,120 c 5,-5 10,-5 15,0 5,5 10,5 15,0 5,-5 10,-5 15,0 5,5 10,5 15,0",
         "fill": False,
     }
+    icn["GR.IC.FF.AMPHIBIOUS"] = {
+        "type": "path",
+        "d": "M 80,100 C 80,120 120,120 120,100",
+        "fill": False,
+    }
+    icn["GR.IC.FF.RECONNAISSANCE EQUIPMENT"] = icn["GR.IC.FF.RECONNAISSANCE"]
     icn["GR.IC.FF.SIGNAL"] = {
         "type": "path",
         "d": "M 100,80 l -20,40 l 40,0 z",
+        "fill": False,
+    }
+    icn["GR.IC.FF.BROADCAST TRANSMITTER ANTENNA"] = icn["GR.IC.FF.SIGNAL"]
+    icn["GR.IC.FF.SUPPLY"] = {
+        "type": "path",
+        "d": "M 60,100 l 80,0 M 100,60 l 0,80",
         "fill": False,
     }
     icn["GR.IC.FF.ANTITANK/ANTIARMOUR"] = {

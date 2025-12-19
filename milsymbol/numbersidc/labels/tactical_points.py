@@ -1,4 +1,4 @@
-def tactical_points(sidc):
+def tactical_points(symbol, sidc):
     # Tactical Point Symbols
     # TODO Maybe add some way to define additions for different symbol sets
     actionPoint = {
