@@ -205,13 +205,15 @@ def common_modifiers(
         "fill": False,
     }
     icn["COM.M2.WHEELED LIMITED"] = [
-        {"type": "circle", "cx": 80, "cy": 130, "r": 7, "fill": False},
-        {"type": "circle", "cx": 120, "cy": 130, "r": 7, "fill": False},
+        {"type": "circle", "cx": 80, "cy": 136, "r": 7, "fill": False},
+        {"type": "circle", "cx": 120, "cy": 136, "r": 7, "fill": False},
     ]
+
+    wheeled_cy = 136
     icn["COM.M2.WHEELED"] = [
-        {"type": "circle", "cx": 75, "cy": 130, "r": 7, "fill": False},
-        {"type": "circle", "cx": 100, "cy": 130, "r": 7, "fill": False},
-        {"type": "circle", "cx": 125, "cy": 130, "r": 7, "fill": False},
+        {"type": "circle", "cx": 75, "cy": wheeled_cy, "r": 7, "fill": False},
+        {"type": "circle", "cx": 100, "cy": wheeled_cy, "r": 7, "fill": False},
+        {"type": "circle", "cx": 125, "cy": wheeled_cy, "r": 7, "fill": False},
     ]
     icn["COM.M2.ROBOTIC"] = {
         "type": "path",
