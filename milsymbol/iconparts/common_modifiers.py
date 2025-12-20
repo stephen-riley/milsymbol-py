@@ -1,7 +1,9 @@
-from .iconparts_functions import defaultProperties, text, textm1, textm2
+from .iconparts_functions import defaultProperties, textm1, textm2
 
 
-def common_modifiers(ms, iconParts, metadata, colors, STD2525, monoColor, alternateMedal):
+def common_modifiers(
+    ms, iconParts, metadata, colors, STD2525, monoColor, alternateMedal
+):
     affiliation = metadata.get("affiliation", "Friend")
     iconColor = colors["iconColor"][affiliation]
 

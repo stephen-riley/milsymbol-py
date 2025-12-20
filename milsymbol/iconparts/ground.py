@@ -3062,13 +3062,17 @@ def ground(ms, iconParts, metadata, colors, STD2525, monoColor, alternateMedal):
     # Missing FF Icons Batch
     icn["GR.IC.FF.INFANTRY"] = {
         "type": "path",
-        "d": "M 25,50 L 175,150 M 175,50 L 25,150",
+        "d": "M 57.5,57.5 L 142.5,142.5 M 142.5,57.5 L 57.5,142.5"
+        if affiliation == "Hostile"
+        else "M 25,50 L 175,150 M 175,50 L 25,150",
         "fill": False,
     }
     icn["GR.IC.FF.MOTORIZED"] = {"type": "path", "d": "M 100,60 100,140", "fill": False}
     icn["GR.IC.FF.RECONNAISSANCE"] = {
         "type": "path",
-        "d": "M 140,80 60,120",
+        "d": "M 57.5,142.5 L 142.5,57.5"
+        if affiliation == "Hostile"
+        else "M 140,80 60,120",
         "fill": False,
     }
     icn["GR.IC.FF.AMPHIBIOUS"] = {
@@ -3105,7 +3109,7 @@ def ground(ms, iconParts, metadata, colors, STD2525, monoColor, alternateMedal):
         "fill": False,
     }
 
-    for r in ["I", "II", "III", "IV", "V"]:
+    for r in ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]:
         icn[f"GR.IC.FF.CLASS {r}"] = text(r)
 
     icn["GR.IC.FF.MAIN GUN SYSTEM"] = {
@@ -3115,7 +3119,10 @@ def ground(ms, iconParts, metadata, colors, STD2525, monoColor, alternateMedal):
     }
 
     missing_keys = [
+        "ANALYSIS",
         "BORDER PATROL",
+        "CLASS ALL",
+        "CLASS MULTIPLE",
         "CORPS SUPPORT",
         "CUSTOMS SERVICE",
         "DEPARTMENT OF JUSTICE (DOJ)",
@@ -3132,13 +3139,44 @@ def ground(ms, iconParts, metadata, colors, STD2525, monoColor, alternateMedal):
         "MEDICAL THEATER",
         "MEDICAL TREATMENT FACILITY",
         "MILITARY POLICE",
+        "NATO SUPPLY CLASS I",
+        "NATO SUPPLY CLASS II",
+        "NATO SUPPLY CLASS IV",
+        "NATO SUPPLY CLASS ALL",
         "PRISON",
+        "SEARCH",
         "SENSOR",
         "SOUND",
         "SUPPLY",
         "SUPPLY CORPS",
         "SUPPLY THEATER",
+        "US MARSHALS SERVICE",
     ]
+    # Missing GR.IC Keys (Non-FF)
+    missing_ic_keys = [
+        "INTERPRETER/TRANSLATOR",
+        "SUPPORT",
+        "ARMY FIELD SUPPORT",
+        "CONTRACTING SERVICES",
+        "PARACHUTE RIGGER",
+        "HUMAN RESOURCES",
+        "NAVAL",
+        "ALLIED COMMAND EUROPE RAPID REACTION CORPS (ARRC)",
+        "ALLIED COMMAND OPERATIONS",
+        "INTERNATIONAL SECURITY ASSISTANCE FORCE (ISAF)",
+        "MULTINATIONAL (MN)",
+        "BUREAU OF ALCOHOL, TOBACCO, FIREARMS AND EXPLOSIVES (ATF) (DEPARTMENT OF JUSTICE)",
+        "DRUG ENFORCEMENT AGENCY (DEA)",
+        "FEDERAL BUREAU OF INVESTIGATION (FBI)",
+        "LAW ENFORCEMENT",
+        "UNITED STATES SECRET SERVICE(TREAS) (USSS)",
+        "TRANSPORTATION SECURITY AGENCY (TSA)",
+        "LAW ENFORCEMENT VESSEL",
+        "CYBER",
+    ]
+    for k in missing_ic_keys:
+        icn[f"GR.IC.{k}"] = {"type": "path", "d": "M 100,100", "fill": False}
+
     for k in missing_keys:
         icn[f"GR.IC.FF.{k}"] = {
             "type": "path",

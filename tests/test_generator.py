@@ -23,13 +23,15 @@ def generate_symbols():
 
     count = 0
 
+    affiliations_map = [("F", "FR", "FR"), ("H", "EN", "EN")]
+
     with open(tsv_path, "r") as f:
         reader = csv.DictReader(f, delimiter="\t")
 
         for row in reader:
             # Parse row data
             scheme = row["codingscheme"]
-            affiliation_raw = row["affiliation"]
+            # row["affiliation"] is ignored as we iterate both
             battle_dim = row["battledimension"]
             status_raw = row["status"]
             function_id = row["functionid"]
@@ -39,7 +41,6 @@ def generate_symbols():
             sizes = row["sizes"]
 
             # Defaults
-            affiliation = "F" if affiliation_raw == "*" else affiliation_raw
             status = "P" if status_raw == "*" else status_raw
 
             # Echelon iteration
@@ -59,77 +60,34 @@ def generate_symbols():
                     # Single char or non-standard format, just use it
                     echelons_to_generate.append((sizes, f"_{sizes}"))
 
-            for ech_code, ech_suffix in echelons_to_generate:
-                # Construct SIDC (15 chars)
-                # 0: Scheme
-                # 1: Affiliation
-                # 2: Battle Dimension
-                # 3: Status
-                # 4-9: Function ID (6 chars)
-                # 10: Modifier 1 (-)
-                # 11: Echelon
-                # 12-13: Country (--)
-                # 14: Order of Battle (-)
+            for aff_code, aff_folder, aff_prefix in affiliations_map:
+                # Ensure sub-output directory exists
+                sub_output_dir = os.path.join(output_dir, aff_folder)
+                os.makedirs(sub_output_dir, exist_ok=True)
 
-                # UCD--- is 6 chars.
-                # SIDC construction:
-                # S + F + G + P + UCD--- + - + D + -- + -
+                for ech_code, ech_suffix in echelons_to_generate:
+                    # Construct SIDC (15 chars)
+                    sidc = f"{scheme}{aff_code}{battle_dim}{status}{function_id}-{ech_code}--"
 
-                sidc = f"{scheme}{affiliation}{battle_dim}{status}{function_id}-{ech_code}--"
+                    filename_base = f"{aff_prefix}_{name}{ech_suffix}_{sidc}"
+                    svg_path = os.path.join(sub_output_dir, f"{filename_base}.svg")
+                    png_path = os.path.join(sub_output_dir, f"{filename_base}.png")
 
-                # Check length (should be 15)
-                # function_id in TSV is "UCD---" (6 chars)
-                # Let's verify string construction
-                # S F G P UCD--- - - -- - (Too long?)
-                # Wait. function_id in TSV is UCD---.
-                # Let's look at test_unit_generation.py example: SFG-UCI----
-                # S: Scheme
-                # F: Affiliation
-                # G: Dimension
-                # -: Status (Not P?)
-                # U: Function ID
-                # C: Function ID
-                # I: Function ID
-                # -: Function ID
-                # -: Function ID
-                # -: Function ID
-                # -: Mod 1
-                # -: Echelon
+                    try:
+                        sym = Symbol(sidc)
 
-                # TSV has:
-                # Scheme: S
-                # Affiliation: *
-                # Dim: G
-                # Status: *
-                # FunctionID: UCD---
+                        # Generate SVG
+                        with open(svg_path, "w") as svg_file:
+                            svg_file.write(sym.asSVG())
 
-                # If I use defaults F and P:
-                # S F G P U C D - - - - [Ech] - -
-                # That is 15 chars.
+                        # Generate PNG
+                        sym.as_png(png_path)
 
-                # However, many test cases use '-' for Status.
-                # The prompt said '*'. Standard usually allows '-' or 'P'.
-                # Let's stick to 'P' for * as planned, unless visual confirms otherwise.
+                        count += 1
+                        # print(f"Generated {filename_base}")
 
-                filename_base = f"{name}{ech_suffix}_{sidc}"
-                svg_path = os.path.join(output_dir, f"{filename_base}.svg")
-                png_path = os.path.join(output_dir, f"{filename_base}.png")
-
-                try:
-                    sym = Symbol(sidc)
-
-                    # Generate SVG
-                    with open(svg_path, "w") as svg_file:
-                        svg_file.write(sym.asSVG())
-
-                    # Generate PNG
-                    sym.as_png(png_path)
-
-                    count += 1
-                    # print(f"Generated {filename_base}")
-
-                except Exception as e:
-                    print(f"Error generating {sidc}: {e}")
+                    except Exception as e:
+                        print(f"Error generating {sidc}: {e}")
 
     print(f"Successfully generated {count} symbols.")
 
