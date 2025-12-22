@@ -94,7 +94,7 @@ This port was done using [Antigravity](https://antigravity.google/) and Gemini 3
 
 (That last sentence was a code-completion suggewtion made by Antigravity based on the session history.  It's pretty accurate!)
 
-The biggest problem was with Gemini porting the very large files like [ground.py](milsymbolpy/iconparts/ground.py) due to an output token limit of 4096 tokens. This was because Antigravity was in preview status when milsymbol-py was ported; this limit will be fized in future versions.
+The biggest problem was with Gemini porting the very large files like [ground.py](milsymbolpy/iconparts/ground.py) due to an output token limit of 4096 tokens. This was because Antigravity was in preview status when milsymbol-py was ported; this limit will be fized in future versions. I ended up porting the very large files manually and let Gemini do the rest.
 
 There were numerous other smaller problems:
 
