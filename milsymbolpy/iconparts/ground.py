@@ -3088,7 +3088,7 @@ def ground(ms, iconParts, metadata, colors, STD2525, monoColor, alternateMedal):
     icn["GR.IC.FF.RECONNAISSANCE EQUIPMENT"] = icn["GR.IC.FF.RECONNAISSANCE"]
     icn["GR.IC.FF.SIGNAL"] = {
         "type": "path",
-        "d": "M 100,80 l -20,40 l 40,0 z",
+        "d": "M 25,50 L 100,110 L 100,90 L 175,150",
         "fill": False,
     }
     icn["GR.IC.FF.BROADCAST TRANSMITTER ANTENNA"] = icn["GR.IC.FF.SIGNAL"]
