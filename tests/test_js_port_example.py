@@ -4,7 +4,7 @@ import sys
 # Add parent directory to path to import milsymbol
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from milsymbol import Symbol
+from milsymbolpy import Symbol
 
 
 def test_js_port():
@@ -18,7 +18,7 @@ def test_js_port():
     #   type: "machine gun".toUpperCase(),
     #   dtg: "30140000ZSEP97",
     #   location: "0900000.0E570306.0N",
-    # }).asSVG();
+    # }).as_svg();
 
     sidc = "130315003611010300000000000000"
     options = {
@@ -46,7 +46,7 @@ def test_js_port():
 
         # Save SVG
         with open(svg_path, "w") as f:
-            f.write(sym.asSVG())
+            f.write(sym.as_svg())
         print(f"Saved SVG to {svg_path}")
 
         # Save PNG

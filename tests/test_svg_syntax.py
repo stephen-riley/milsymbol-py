@@ -6,7 +6,7 @@ import os
 # Add parent directory to path to import milsymbol
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from milsymbol import Symbol
+from milsymbolpy import Symbol
 
 
 class TestSVGSyntax(unittest.TestCase):
@@ -23,7 +23,7 @@ class TestSVGSyntax(unittest.TestCase):
         # 2525C simple symbol
         sidc = "SFG-UCI----D"
         sym = Symbol(sidc)
-        svg = sym.asSVG()
+        svg = sym.as_svg()
         root = self.validate_svg_xml(svg)
 
         # Check basic attributes
@@ -35,7 +35,7 @@ class TestSVGSyntax(unittest.TestCase):
         # 2525D number sidc
         sidc = "10031000001211000000"
         sym = Symbol(sidc)
-        svg = sym.asSVG()
+        svg = sym.as_svg()
         root = self.validate_svg_xml(svg)
 
         self.assertIn("width", root.attrib)
@@ -45,8 +45,8 @@ class TestSVGSyntax(unittest.TestCase):
         sidc = "SFG-UCI----D"
         options = {"uniqueDesignation": "1st Plt", "higherFormation": "2nd Bn"}
         sym = Symbol(sidc, options)
-        svg = sym.asSVG()
-        root = self.validate_svg_xml(svg)
+        svg = sym.as_svg()
+        self.validate_svg_xml(svg)
 
         # Simple check if text exists in SVG (not perfect, but good sanity check)
         self.assertTrue("1st Plt" in svg)

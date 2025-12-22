@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 # Add parent directory to path to import milsymbol
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from milsymbol import Symbol
+from milsymbolpy import Symbol
 
 
 class TestUnitGeneration(unittest.TestCase):
@@ -60,7 +60,7 @@ class TestUnitGeneration(unittest.TestCase):
             sidc = f"SFG-UCI----{code}"
             with self.subTest(echelon=name, sidc=sidc):
                 sym = Symbol(sidc)
-                svg = sym.asSVG()
+                svg = sym.as_svg()
                 self.validate_svg_xml(svg)
                 # print(f"Verified {name}: {sidc}")
 
@@ -79,7 +79,7 @@ class TestUnitGeneration(unittest.TestCase):
         for sidc in units:
             with self.subTest(sidc=sidc):
                 sym = Symbol(sidc)
-                svg = sym.asSVG()
+                svg = sym.as_svg()
                 self.validate_svg_xml(svg)
 
     def test_affiliations(self):
@@ -91,7 +91,7 @@ class TestUnitGeneration(unittest.TestCase):
             sidc = f"S{aff}{base}"
             with self.subTest(affiliation=aff, sidc=sidc):
                 sym = Symbol(sidc)
-                svg = sym.asSVG()
+                svg = sym.as_svg()
                 self.validate_svg_xml(svg)
 
 

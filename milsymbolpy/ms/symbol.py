@@ -494,7 +494,7 @@ class Symbol:
             return {"valid": valid, "draw": draw_valid, "icon": self.validIcon}
         return valid
 
-    def asSVG(self):
+    def as_svg(self):
         from .ms import ms
 
         def process_instructions(instructions):
@@ -603,12 +603,12 @@ class Symbol:
         # But user wants PNG export.
         # "Add the ability to export the symbols as PNG images."
         # I'll implement as_png() using cairosvg instead of toDataURL
-        return "data:image/svg+xml;utf8," + self.asSVG()
+        return "data:image/svg+xml;utf8," + self.as_svg()
 
     def as_png(self, filename=None):
         import cairosvg
 
-        svg = self.asSVG()
+        svg = self.as_svg()
         if filename:
             cairosvg.svg2png(bytestring=svg.encode("utf-8"), write_to=filename)
         else:

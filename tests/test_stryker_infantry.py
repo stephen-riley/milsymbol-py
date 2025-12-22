@@ -6,29 +6,15 @@ import xml.etree.ElementTree as ET
 # Add parent directory to path to import milsymbol
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from milsymbol import Symbol
+from milsymbolpy import Symbol
 
 
 class TestEnemyMechanizedInfantry(unittest.TestCase):
     def test_generate_symbol(self):
-        # SIDC for Enemy Mechanized Infantry Battalion
-        # S: Standard
-        # H: Hostile
-        # G: Ground
-        # -: Status (Present)
-        # U: Unit
-        # C: Combat
-        # I: Infantry
-        # Z: Mechanized
-        # -: Modifier 1
-        # -: Modifier 2
-        # -: Country Code
-        # F: Echelon (Battalion)
-        # sidc = "SHG-UCIZ---F"
         sidc = "130310000012110007061100000000"
 
         symbol = Symbol(sidc)
-        svg_content = symbol.asSVG()
+        svg_content = symbol.as_svg()
 
         # Validate XML structure
         try:

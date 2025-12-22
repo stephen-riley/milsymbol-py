@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 # Add parent directory to path to import milsymbol
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from milsymbol import Symbol
+from milsymbolpy import Symbol
 
 
 class TestEnemyMechanizedInfantry(unittest.TestCase):
@@ -27,7 +27,7 @@ class TestEnemyMechanizedInfantry(unittest.TestCase):
         sidc = "SHG-UCIZ---F"
 
         symbol = Symbol(sidc)
-        svg_content = symbol.asSVG()
+        svg_content = symbol.as_svg()
 
         # Validate XML structure
         try:

@@ -5,7 +5,7 @@ import sys
 # Add parent directory to path to import milsymbol
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from milsymbol import Symbol
+from milsymbolpy import Symbol
 
 
 def generate_symbols():
@@ -124,7 +124,7 @@ def generate_symbols():
                         try:
                             sym = Symbol(sidc)
                             with open(svg_path, "w") as svg_file:
-                                svg_file.write(sym.asSVG())
+                                svg_file.write(sym.as_svg())
                             sym.as_png(png_path)
                             count += 1
                         except Exception as e:
@@ -170,7 +170,7 @@ def generate_symbols():
 
                             # Generate SVG
                             with open(svg_path, "w") as svg_file:
-                                svg_file.write(sym.asSVG())
+                                svg_file.write(sym.as_svg())
 
                             # Generate PNG
                             sym.as_png(png_path)
