@@ -86,10 +86,6 @@ And if you don't want to make it step by step, you can chain it all together lik
 
 ![Infantry Platoon](https://github.com/spatialillusions/milsymbol/blob/master/docs/images/infantry-platoon.png?raw=true)
 
-## Technology
-
-Milsymbol-py uses pure Python to create SVG images, and uses cairosvg for PNG support.
-
 ## Thoughts on "vibe-coding" the port
 
 This port was done using [Antigravity](https://antigravity.google/) and Gemini 3.0 Pro.  
