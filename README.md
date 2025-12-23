@@ -82,7 +82,7 @@ You can get an image in either SVG or PNG formats.
 
 And if you don't want to make it step by step, you can chain it all together like this:
 
-`var canvasElement = new ms.Symbol("130310001412110000000000000000").asCanvas();`
+`var canvasElement = new ms.Symbol("130310001412110000000000000000").as_png("path/to/output.png");`
 
 ![Infantry Platoon](https://github.com/spatialillusions/milsymbol/blob/master/docs/images/infantry-platoon.png?raw=true)
 
