@@ -86,6 +86,25 @@ And if you don't want to make it step by step, you can chain it all together lik
 
 ![Infantry Platoon](https://github.com/spatialillusions/milsymbol/blob/master/docs/images/infantry-platoon.png?raw=true)
 
+## Enhancements in the python version
+
+For combat land units as specified in MIL-STD-2525E, you can build a symbol and call `get_desc()` to get a human-readable description of the symbol.
+
+```python
+from milsymbolpy import Symbol
+# This is a Stryker battalion
+sym = Symbol("130310001612110007061100000000")
+print(sym.get_desc())
+```
+
+This will output:
+
+```
+Infantry [Armored, Wheeled X (Cross Country)] (BN/SQDN)
+```
+
+which is the MIL-STD-2525E nomenclature for a Stryker battalion.
+
 ## Thoughts on "vibe-coding" the port
 
 This port was done using [Antigravity](https://antigravity.google/) and Gemini 3.0 Pro.  
