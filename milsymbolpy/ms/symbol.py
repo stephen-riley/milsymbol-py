@@ -1,10 +1,4 @@
 from .bbox import BBox
-# import ms.ms as ms_module  # Deferred import to avoid circular dependency
-# from .assvg import as_svg # Will implement later
-# from .isvalid import is_valid
-
-# Placeholder imports that will be replaced by actual implementations or deferred imports
-import math
 
 
 class Symbol:
@@ -461,12 +455,6 @@ class Symbol:
         return colors
 
     def isValid(self, extended=False):
-        # basic valid check
-        # JS: JSON.stringify(this.drawInstructions).indexOf("null") == -1
-        # Python check for None in draw instructions
-        # (Assuming we don't put None in the list, but maybe?)
-        import json
-
         # Simple check
         def has_none(obj):
             if obj is None:

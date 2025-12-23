@@ -1,4 +1,3 @@
-import copy
 from .colormode import ColorMode
 from ..colormodes import ColorModes
 from .bbox import BBox
