@@ -9,9 +9,9 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 from milsymbolpy import Symbol
 
 
-class TestEnemyMechanizedInfantry(unittest.TestCase):
+class TestFriendlyStrykerInfantry(unittest.TestCase):
     def test_generate_symbol(self):
-        sidc = "130310000012110007061100000000"
+        sidc = "130310001612110007061100000000"
 
         symbol = Symbol(sidc)
         svg_content = symbol.as_svg()
