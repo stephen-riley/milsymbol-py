@@ -1,6 +1,10 @@
 from .ms.ms import ms
 from .ms.symbol import Symbol
 
+# Lookup classes
+from .ms.lookup.entities import MilStd2525Entities
+from .ms.lookup.modifiers import MilStd2525Sector1Modifiers, MilStd2525Sector2Modifiers
+
 # Expose ms and Symbol
 # In JS: import { ms } from "./ms.js"; import Symbol from "./ms/symbol.js"; ms.Symbol = Symbol; export { ms };
 ms.Symbol = Symbol
@@ -48,4 +52,11 @@ ms.addIcons(app6d)
 # So we should probably do the same here if we want 1:1 exact behavior on import.
 # However, I haven't ported the icon sets yet. I will add them later.
 
-__all__ = ["ms", "Symbol"]
+
+__all__ = [
+    "ms",
+    "Symbol",
+    "MilStd2525Entities",
+    "MilStd2525Sector1Modifiers",
+    "MilStd2525Sector2Modifiers",
+]

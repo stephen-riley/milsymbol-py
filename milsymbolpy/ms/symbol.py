@@ -1,10 +1,6 @@
 from .bbox import BBox
-# import ms.ms as ms_module  # Deferred import to avoid circular dependency
-# from .assvg import as_svg # Will implement later
-# from .isvalid import is_valid
-
-# Placeholder imports that will be replaced by actual implementations or deferred imports
-import math
+from .lookup.entities import MilStd2525Entities
+from .lookup.modifiers import MilStd2525Sector1Modifiers, MilStd2525Sector2Modifiers
 
 
 class Symbol:
@@ -461,12 +457,6 @@ class Symbol:
         return colors
 
     def isValid(self, extended=False):
-        # basic valid check
-        # JS: JSON.stringify(this.drawInstructions).indexOf("null") == -1
-        # Python check for None in draw instructions
-        # (Assuming we don't put None in the list, but maybe?)
-        import json
-
         # Simple check
         def has_none(obj):
             if obj is None:
@@ -596,7 +586,103 @@ class Symbol:
         xml = f'<svg xmlns="{ms._svgNS}" version="1.2" baseProfile="tiny" width="{self.width}" height="{self.height}" viewBox="{self.bbox.x1 - self.style["strokeWidth"] - self.style["outlineWidth"]} {self.bbox.y1 - self.style["strokeWidth"] - self.style["outlineWidth"]} {self.baseWidth} {self.baseHeight}">'
         xml += process_instructions(self.drawInstructions)
         xml += "</svg>"
-        return xml
+
+    def get_desc(self):
+        """
+        Returns a human-readable description for the symbol.
+        Format: "entity, entity_type [sector1 modifier, sector2 modifier] (echelon)"
+        """
+        sidc = self.options.get("sidc", "")
+
+        # Basic check for numeric SIDC length (at least 20 chars)
+        if not sidc or len(sidc) < 20 or not sidc.isdigit():
+            return "Unknown Symbol"
+
+        entities = MilStd2525Entities()
+        mod1_lookup = MilStd2525Sector1Modifiers()
+        mod2_lookup = MilStd2525Sector2Modifiers()
+
+        entity_name = ""
+        modifiers = []
+        echelon = ""
+
+        # 1. Entity (Digits 11-16)
+        entity_code = sidc[10:16]
+        entity_obj = entities[entity_code]
+        if entity_obj:
+            entity_name = entity_obj.get_label()
+
+        # 2. Modifiers
+        mod1_prefix = sidc[20] if len(sidc) > 20 else "0"
+        mod2_prefix = sidc[21] if len(sidc) > 21 else "0"
+        mod1_suffix = sidc[16:18]
+        mod2_suffix = sidc[18:20]
+
+        mod1_code = mod1_prefix + mod1_suffix
+        mod2_code = mod2_prefix + mod2_suffix
+
+        if mod1_code and mod1_code != "000":
+            mod1 = mod1_lookup[mod1_code]
+            if mod1:
+                modifiers.append(mod1.name)
+
+        if mod2_code and mod2_code != "000":
+            mod2 = mod2_lookup[mod2_code]
+            if mod2:
+                modifiers.append(mod2.name)
+
+        # 3. Echelon / Mobility (Digits 9-10)
+        echelon_mobility = sidc[8:10]
+        echelon_map = {
+            "11": "Team/Crew",
+            "12": "SQD",
+            "13": "SEC",
+            "14": "PLT/DET",
+            "15": "CO/BAT/TRP",
+            "16": "BN/SQDN",
+            "17": "REG/GRP",
+            "18": "BDE",
+            "21": "DIV",
+            "22": "Corps/MEF",
+            "23": "Army",
+            "24": "Army Group/front",
+            "25": "Region/Theater",
+            "26": "Command",
+            "31": "Wheeled limited cross country",
+            "32": "Wheeled cross country",
+            "33": "Tracked",
+            "34": "Wheeled and tracked combination",
+            "35": "Towed",
+            "36": "Rail",
+            "37": "Pack animals",
+            "41": "Over snow (prime mover)",
+            "42": "Sled",
+            "51": "Barge",
+            "52": "Amphibious",
+            "61": "Short towed array",
+            "62": "Long towed Array",
+            "71": "Leader Individual",
+            "72": "Deputy Individual",
+        }
+        if echelon_mobility in echelon_map:
+            echelon = echelon_map[echelon_mobility]
+
+        # Construct Name
+        # Format: "entity, entity_type [sector1 modifier, sector2 modifier] (echelon)"
+        parts = []
+        if entity_name:
+            parts.append(entity_name)
+
+        if modifiers:
+            parts.append(f"[{', '.join(modifiers)}]")
+
+        if echelon:
+            parts.append(f"({echelon})")
+
+        if not parts:
+            return "Unknown Symbol"
+
+        return " ".join(parts)
 
     def toDataURL(self):
         # Renders SVG to Data URL (base64)
