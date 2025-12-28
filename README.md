@@ -14,7 +14,7 @@ svg_content = symbol.as_svg()
 symbol.as_png(png_path)
 ```
 
-![Stryker Infantry Unit](img/friendly_stryker_infantry.png)
+![Stryker Infantry Unit](docs/img/friendly_stryker_infantry.png)
 
 A more complex example:
 
@@ -36,7 +36,7 @@ svg_content = symbol.as_svg()
 symbol.as_png(png_path)
 ```
 
-![Complex Example](img/js_port_example.png)
+![Complex Example](docs/img/js_port_example.png)
 
 Compare this to the reference figure from MIL-STD-2525C:
 
