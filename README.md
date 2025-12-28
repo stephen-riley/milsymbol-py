@@ -84,7 +84,7 @@ You can get an image in either SVG or PNG formats.
 
 ### Human-readable description from SIDC
 
-For combat land units as specified in MIL-STD-2525E, you can build a symbol and call `get_desc()` to get a human-readable description of the symbol.
+For combat land units as specified in MIL-STD-2525E (numeric SIDCs), you can build a symbol and call `get_desc()` to get a human-readable description of the symbol.
 
 ```python
 from milsymbolpy import Symbol
@@ -96,18 +96,18 @@ print(sym.get_desc())
 This will output:
 
 ```
-Infantry [Armored, Wheeled X (Cross Country)] (BN/SQDN)
+[FR] Infantry [Armored, Wheeled X (Cross Country)] (BN/SQDN)
 ```
 
-which is the MIL-STD-2525E nomenclature for a Stryker battalion.
+which is the MIL-STD-2525E nomenclature for a friendly Stryker battalion.
 
 The description is structured as follows:
 
 ```
-<Entity>, <Entity Type> [<Sector 1 Modifier>, <Sector 2 Modifier>] (<Echelon/size>)
+[<FR/EN/NT/UN>] <Entity>, <Entity Type> [<Sector 1 Modifier>, <Sector 2 Modifier>] (<Echelon/size>)
 ```
 
-Any components that are not present in the SIDC will be omitted from the description, including separator characters.  For examnple, a simple infantry battalion with no modifiers (`130310001612110000000000000000`) will be described as `Infantry (BN/SQDN)`.
+Any components that are not present in the SIDC will be omitted from the description, including separator characters.  For examnple, a simple infantry battalion with no modifiers (`130310001612110000000000000000`) will be described as `[FR]Infantry (BN/SQDN)`.
 
 ### Training PNG rendering
 

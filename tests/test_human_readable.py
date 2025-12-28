@@ -7,14 +7,20 @@ from milsymbolpy import Symbol
 
 def test_human_readable():
     test_cases = [
+        ("130310000012110007001000000000", "[FR] Infantry [Armored]"),
+        ("130310000012110000060100000000", "[FR] Infantry [Wheeled X (Cross Country)]"),
+        ("130310001612110000000000000000", "[FR] Infantry (BN/SQDN)"),
+        ("130310001612110600000000000000", "[FR] Infantry, Main Gun System (BN/SQDN)"),
         (
+            # test of overrides
             "130310001612110007061100000000",
-            "Infantry [Armored, Wheeled X (Cross Country)] (BN/SQDN)",
+            "[FR] Stryker (BN/SQDN)",
         ),
-        ("130310000012110007001000000000", "Infantry [Armored]"),
-        ("130310000012110000060100000000", "Infantry [Wheeled X (Cross Country)]"),
-        ("130310001612110000000000000000", "Infantry (BN/SQDN)"),
-        ("130310001612110600000000000000", "Infantry, Main Gun System (BN/SQDN)"),
+        (
+            # test of overrides
+            "130610001612110007061100000000",
+            "[EN] Infantry [Armored, Wheeled X (Cross Country)] (BN/SQDN)",
+        ),
     ]
 
     all_passed = True

@@ -588,10 +588,16 @@ class Symbol:
         xml += "</svg>"
         return xml
 
+    def _get_desc_override(self, sidc):
+        if sidc[0:8] == "13031000" and sidc[10:22] == "121100070611":
+            return "Stryker"
+        else:
+            return None
+
     def get_desc(self):
         """
         Returns a human-readable description for the symbol.
-        Format: "entity, entity_type [sector1 modifier, sector2 modifier] (echelon)"
+        Format: "entity (including entity_type) [sector1 modifier, sector2 modifier] (echelon)"
         """
         sidc = self.options.get("sidc", "")
 
@@ -602,37 +608,51 @@ class Symbol:
         entities = MilStd2525Entities()
         mod1_lookup = MilStd2525Sector1Modifiers()
         mod2_lookup = MilStd2525Sector2Modifiers()
+        alignments = {
+            "03": "FR",
+            "06": "EN",
+            "04": "NT",
+            "01": "UN",
+        }
 
         entity_name = ""
         modifiers = []
         echelon = ""
 
-        # 1. Entity (Digits 11-16)
-        entity_code = sidc[10:16]
-        entity_obj = entities[entity_code]
-        if entity_obj:
-            entity_name = entity_obj.get_label()
+        # 1. Alignment
+        alignment = alignments[sidc[2:4]]
 
-        # 2. Modifiers
-        mod1_prefix = sidc[20] if len(sidc) > 20 else "0"
-        mod2_prefix = sidc[21] if len(sidc) > 21 else "0"
-        mod1_suffix = sidc[16:18]
-        mod2_suffix = sidc[18:20]
+        # 2. Check for overrides
+        override = self._get_desc_override(sidc)
+        if override is not None:
+            entity_name = override
+        else:
+            # 3. Entity (Digits 11-16)
+            entity_code = sidc[10:16]
+            entity_obj = entities[entity_code]
+            if entity_obj:
+                entity_name = entity_obj.get_label()
 
-        mod1_code = mod1_prefix + mod1_suffix
-        mod2_code = mod2_prefix + mod2_suffix
+            # 4. Modifiers
+            mod1_prefix = sidc[20] if len(sidc) > 20 else "0"
+            mod2_prefix = sidc[21] if len(sidc) > 21 else "0"
+            mod1_suffix = sidc[16:18]
+            mod2_suffix = sidc[18:20]
 
-        if mod1_code and mod1_code != "000":
-            mod1 = mod1_lookup[mod1_code]
-            if mod1:
-                modifiers.append(mod1.name)
+            mod1_code = mod1_prefix + mod1_suffix
+            mod2_code = mod2_prefix + mod2_suffix
 
-        if mod2_code and mod2_code != "000":
-            mod2 = mod2_lookup[mod2_code]
-            if mod2:
-                modifiers.append(mod2.name)
+            if mod1_code and mod1_code != "000":
+                mod1 = mod1_lookup[mod1_code]
+                if mod1:
+                    modifiers.append(mod1.name)
 
-        # 3. Echelon / Mobility (Digits 9-10)
+            if mod2_code and mod2_code != "000":
+                mod2 = mod2_lookup[mod2_code]
+                if mod2:
+                    modifiers.append(mod2.name)
+
+        # 5. Echelon / Mobility (Digits 9-10)
         echelon_mobility = sidc[8:10]
         echelon_map = {
             "11": "Team/Crew",
@@ -669,8 +689,8 @@ class Symbol:
             echelon = echelon_map[echelon_mobility]
 
         # Construct Name
-        # Format: "entity, entity_type [sector1 modifier, sector2 modifier] (echelon)"
-        parts = []
+        # Format: "[alignment] entity, entity_type [sector1 modifier, sector2 modifier] (echelon)"
+        parts = [f"[{alignment}]"]
         if entity_name:
             parts.append(entity_name)
 
@@ -681,7 +701,7 @@ class Symbol:
             parts.append(f"({echelon})")
 
         if not parts:
-            return "Unknown Symbol"
+            return "{unknown symbol}"
 
         return " ".join(parts)
 
