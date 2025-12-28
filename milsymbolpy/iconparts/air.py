@@ -749,6 +749,7 @@ def air(ms, iconParts, metadata, colors, STD2525, monoColor, alternateMedal):
 
     for key in icn:
         if key in iconParts:
-            print("Override of: " + key)
+            # print("Override of: " + key)
+            pass
         defaultProperties(icn[key], iconColor)
         iconParts[key] = icn[key]

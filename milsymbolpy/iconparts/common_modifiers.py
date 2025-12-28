@@ -248,7 +248,7 @@ def common_modifiers(
 
     for key, value in icn.items():
         if key in iconParts:
-            print(f"Override of: {key}")
-
+            # print(f"Override of: {key}")
+            pass
         defaultProperties(value, iconColor)
         iconParts[key] = value
