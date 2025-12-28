@@ -40,7 +40,7 @@ symbol.as_png(png_path)
 
 Compare this to the reference figure from MIL-STD-2525C:
 
-![Figure 13](https://github.com/spatialillusions/milsymbol/blob/master/docs/images/figure13.png?raw=true)
+![Figure 13](docs/img/figure13.png)
 
 ## Milsymbol-py summary
 
