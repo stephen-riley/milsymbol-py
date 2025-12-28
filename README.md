@@ -88,6 +88,8 @@ And if you don't want to make it step by step, you can chain it all together lik
 
 ## Enhancements in the python version
 
+### Human-readable description from SIDC
+
 For combat land units as specified in MIL-STD-2525E, you can build a symbol and call `get_desc()` to get a human-readable description of the symbol.
 
 ```python
@@ -104,6 +106,18 @@ Infantry [Armored, Wheeled X (Cross Country)] (BN/SQDN)
 ```
 
 which is the MIL-STD-2525E nomenclature for a Stryker battalion.
+
+The description is structured as follows:
+
+```
+<Entity>, <Entity Type> [<Sector 1 Modifier>, <Sector 2 Modifier>] (<Echelon/size>)
+```
+
+Any components that are not present in the SIDC will be omitted from the description, including separator characters.  For examnple, a simple infantry battalion with no modifiers (`130310001612110000000000000000`) will be described as `Infantry (BN/SQDN)`.
+
+### Training PNG rendering
+
+`Symbol.as_png(dest_path, training=True)` will render the symbol in training mode, which which generates a PNG image of the symbol with a white background appropriate for LoRA training.  You may also specify a `width` and `height` for the image.
 
 ## Thoughts on "vibe-coding" the port
 

@@ -7,15 +7,14 @@ from milsymbolpy import Symbol
 
 def test_human_readable():
     test_cases = [
-        # Original
         (
             "130310001612110007061100000000",
             "Infantry [Armored, Wheeled X (Cross Country)] (BN/SQDN)",
         ),
-        # New Cases
         ("130310000012110007001000000000", "Infantry [Armored]"),
         ("130310000012110000060100000000", "Infantry [Wheeled X (Cross Country)]"),
         ("130310001612110000000000000000", "Infantry (BN/SQDN)"),
+        ("130310001612110600000000000000", "Infantry, Main Gun System (BN/SQDN)"),
     ]
 
     all_passed = True
