@@ -586,6 +586,7 @@ class Symbol:
         xml = f'<svg xmlns="{ms._svgNS}" version="1.2" baseProfile="tiny" width="{self.width}" height="{self.height}" viewBox="{self.bbox.x1 - self.style["strokeWidth"] - self.style["outlineWidth"]} {self.bbox.y1 - self.style["strokeWidth"] - self.style["outlineWidth"]} {self.baseWidth} {self.baseHeight}">'
         xml += process_instructions(self.drawInstructions)
         xml += "</svg>"
+        return xml
 
     def get_desc(self):
         """
@@ -691,11 +692,45 @@ class Symbol:
         # I'll implement as_png() using cairosvg instead of toDataURL
         return "data:image/svg+xml;utf8," + self.as_svg()
 
-    def as_png(self, filename=None):
+    def as_png(self, filename=None, width=384, height=384, training=False):
         import cairosvg
 
         svg = self.as_svg()
-        if filename:
-            cairosvg.svg2png(bytestring=svg.encode("utf-8"), write_to=filename)
+
+        if not training:
+            # Original functionality: transparent background, auto-size
+            if filename:
+                cairosvg.svg2png(bytestring=svg.encode("utf-8"), write_to=filename)
+            else:
+                return cairosvg.svg2png(bytestring=svg.encode("utf-8"))
         else:
-            return cairosvg.svg2png(bytestring=svg.encode("utf-8"))
+            # Training mode: white background, centered, custom size
+            from PIL import Image
+            import io
+
+            # Render the symbol itself to PNG bytes
+            png_bytes = cairosvg.svg2png(bytestring=svg.encode("utf-8"))
+
+            # Load into PIL
+            symbol_img = Image.open(io.BytesIO(png_bytes))
+
+            # Create background
+            bg = Image.new(
+                "RGBA", (width, height), (255, 255, 255, 255)
+            )  # White opaque
+
+            # Calculate center position
+            sym_w, sym_h = symbol_img.size
+            offset_x = (width - sym_w) // 2
+            offset_y = (height - sym_h) // 2
+
+            # Paste symbol onto background (using alpha channel as mask if available)
+            bg.paste(symbol_img, (offset_x, offset_y), symbol_img)
+
+            # Output
+            if filename:
+                bg.save(filename, format="PNG")
+            else:
+                output = io.BytesIO()
+                bg.save(output, format="PNG")
+                return output.getvalue()
