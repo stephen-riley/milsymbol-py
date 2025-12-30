@@ -142,7 +142,7 @@ In general, even though Antigravity was using Gemini 3.0 Pro, it had a lot of pr
 - [Milsymbol](https://github.com/spatialillusions/milsymbol)
 - [Milsymbol Documentation](https://spatialillusions.com/milsymbol/)
 - [MIL-STD-2525C/D/E](docs/)
-- [FM 1-02.2 Military Symbols][docs/]
+- [FM 1-02.2 Military Symbols](docs/)
 
 See [here](https://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=114934) to download all revisions of MIL-STD-2525.
 
