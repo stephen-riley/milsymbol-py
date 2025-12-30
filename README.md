@@ -80,7 +80,11 @@ You can get an image in either SVG or PNG formats.
 
 `png = sym.as_png(dest_path)`
 
-## Enhancements in the python version
+## Changes in the python version
+
+### Focus on numeric SIDCs
+
+The port focuses on numeric SIDCs, introduced in MIL-STD-2525D.  Letter SIDCs work to some extent but shouldn't really be used.
 
 ### Human-readable description from SIDC
 
@@ -107,7 +111,7 @@ The description is structured as follows:
 [<FR/EN/NT/UN>] <Entity>, <Entity Type> [<Sector 1 Modifier>, <Sector 2 Modifier>] (<Echelon/size>)
 ```
 
-Any components that are not present in the SIDC will be omitted from the description, including separator characters.  For examnple, a simple infantry battalion with no modifiers (`130310001612110000000000000000`) will be described as `[FR]Infantry (BN/SQDN)`.
+Any components that are not present in the SIDC will be omitted from the description, including separator characters.  For examnple, a simple infantry battalion with no modifiers (`130310001612110000000000000000`) will be described as `[FR] Infantry (BN/SQDN)`.
 
 ### Training PNG rendering
 
