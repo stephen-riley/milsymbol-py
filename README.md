@@ -59,20 +59,26 @@ Since version 3.0 of [Milsymbol.js](https://github.com/spatialillusions/milsymbo
 
 ## Getting started
 
-Download/clone the source and `pip install ./path/milsymbol-py`.  During development of your project, I recommend doing an editable install with `pip install -e ./path/milsymbol-py`.
+Basically, clone the repo, set up a virtual environment, and install the required packages.
+
+```bash
+git clone https://github.com/stephen-riley/milsymbol-py
+cd milsymbol-py
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+During development of your project, I recommend doing an editable install with `pip install -e ./relative/path/to/milsymbol-py`.
 
 To create your first symbol, you use the symbol method to create a symbol object:
 
 ```python
 from milsymbolpy import Symbol
-sym = Symbol(sidc,{options})
+sym = Symbol("130310001412110000000000000000", { "size": 100 })
 ```
 
-To make a symbol for an infantry platoon, the syntax would be:
-
-`sym = Symbol("130310001412110000000000000000")`
-
-And `sym` will now be a symbol object containing information about the size and draw instructions.
+This creates a basic infantry platoon symbol object with a given size.  See [here](https://github.com/stephen-riley/milsymbol-py/blob/main/milsymbolpy/ms/symbol.py#L14) and [here](https://github.com/stephen-riley/milsymbol-py/blob/main/milsymbolpy/ms/symbol.py#L51) for a list of options.
 
 You can get an image in either SVG or PNG formats.
 
