@@ -9,6 +9,7 @@ build/
 *.log
 tmp/
 .venv/
+*.egg-info/
 
 # Excel temp files
 ~$*
