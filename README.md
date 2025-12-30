@@ -88,30 +88,26 @@ The port focuses on numeric SIDCs, introduced in MIL-STD-2525D.  Letter SIDCs wo
 
 ### Human-readable description from SIDC
 
-For combat land units as specified in MIL-STD-2525E (numeric SIDCs), you can build a symbol and call `get_desc()` to get a human-readable description of the symbol.
+For combat land units as specified in MIL-STD-2525E (numeric SIDCs), you can build a symbol and call `get_desc()` to get a human-readable description of the symbol.  **This is not meant to be a machine-parsable string;** it really is indended to be human-readable.  (Actually, it's meant to be LLM-readable.  It was implemented for a project to teach MIL-STD-2525 symbology to Gemma 3.)
 
 ```python
 from milsymbolpy import Symbol
 # This is a Stryker battalion
-sym = Symbol("130310001612110007061100000000")
+sym = Symbol("130610001612110007061100000000")
 print(sym.get_desc())
+
+# Outputs "Hostile Armored, Wheeled X (Cross Country) Infantry Battaltion/Squadron"
 ```
 
-This will output:
+which is the MIL-STD-2525E nomenclature for a hostile motor rifle battalion.
+
+In general, description is structured as follows:
 
 ```
-[FR] Infantry [Armored, Wheeled X (Cross Country)] (BN/SQDN)
+<Alignment> <Sector 1 modifier>, <Sector 2 modifier> <Entity type> <Entity> <Echelon/size>
 ```
 
-which is the MIL-STD-2525E nomenclature for a friendly Stryker battalion.
-
-The description is structured as follows:
-
-```
-[<FR/EN/NT/UN>] <Entity>, <Entity Type> [<Sector 1 Modifier>, <Sector 2 Modifier>] (<Echelon/size>)
-```
-
-Any components that are not present in the SIDC will be omitted from the description, including separator characters.  For examnple, a simple infantry battalion with no modifiers (`130310001612110000000000000000`) will be described as `[FR] Infantry (BN/SQDN)`.
+Any components that are not present in the SIDC will be omitted from the description.  For examnple, a simple infantry battalion with no modifiers (`130310001612110000000000000000`) will be described as `Friendly Infantry Battalion/Squadron`.
 
 ### Training PNG rendering
 

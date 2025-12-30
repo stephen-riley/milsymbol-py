@@ -597,7 +597,7 @@ class Symbol:
     def get_desc(self):
         """
         Returns a human-readable description for the symbol.
-        Format: "entity (including entity_type) [sector1 modifier, sector2 modifier] (echelon)"
+        Format: "<Alignment> <Sector 1 modifier>, <Sector 2 modifier> <Entity type> <Entity> <Echelon/size>"
         """
         sidc = self.options.get("sidc", "")
 
@@ -609,10 +609,10 @@ class Symbol:
         mod1_lookup = MilStd2525Sector1Modifiers()
         mod2_lookup = MilStd2525Sector2Modifiers()
         alignments = {
-            "03": "FR",
-            "06": "EN",
-            "04": "NT",
-            "01": "UN",
+            "03": "Friendly",
+            "06": "Hostile",
+            "04": "Neutral",
+            "01": "Unknown",
         }
 
         entity_name = ""
@@ -656,14 +656,14 @@ class Symbol:
         echelon_mobility = sidc[8:10]
         echelon_map = {
             "11": "Team/Crew",
-            "12": "SQD",
-            "13": "SEC",
-            "14": "PLT/DET",
-            "15": "CO/BAT/TRP",
-            "16": "BN/SQDN",
-            "17": "REG/GRP",
-            "18": "BDE",
-            "21": "DIV",
+            "12": "Squad",
+            "13": "Section",
+            "14": "Platoon/Detachment",
+            "15": "Company/Battery/Troop",
+            "16": "Battalion/Squadron",
+            "17": "Regiment/Group",
+            "18": "Brigade",
+            "21": "Division",
             "22": "Corps/MEF",
             "23": "Army",
             "24": "Army Group/front",
@@ -690,15 +690,15 @@ class Symbol:
 
         # Construct Name
         # Format: "[alignment] entity, entity_type [sector1 modifier, sector2 modifier] (echelon)"
-        parts = [f"[{alignment}]"]
+        parts = [alignment]
+        if modifiers:
+            parts.append(', '.join(modifiers))
+
         if entity_name:
             parts.append(entity_name)
 
-        if modifiers:
-            parts.append(f"[{', '.join(modifiers)}]")
-
         if echelon:
-            parts.append(f"({echelon})")
+            parts.append(echelon)
 
         if not parts:
             return "{unknown symbol}"
