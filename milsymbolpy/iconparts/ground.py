@@ -4,7 +4,7 @@ from .iconparts_functions import defaultProperties, text, textm1, textm2
 def ground(ms, iconParts, metadata, colors, STD2525, monoColor, alternateMedal):
     frame = metadata.get("frame")
     affiliation = metadata.get("affiliation", "Friend")
-    metadata.get("baseGeometry")
+    baseGeometry = metadata.get("baseGeometry")
     numberSIDC = metadata.get("numberSIDC")
 
     iconColor = colors["iconColor"][affiliation]
@@ -3061,20 +3061,25 @@ def ground(ms, iconParts, metadata, colors, STD2525, monoColor, alternateMedal):
 
     # Missing FF Icons Batch
     icn["GR.IC.FF.INFANTRY"] = {
+        "Unknown": {"type": "path", "d": "M50,65L150,135M50,135L150,65"},
+        "Friend": {"type": "path", "d": "M25,50 L175,150 M25,150 L175,50"},
+        "Neutral": {"type": "path", "d": "M45,45L155,155M45,155L155,45"},
+        "Hostile": {"type": "path", "d": "M60,70L140,130M60,130L140,70"},
+    }.get(affiliation)
+    icn["GR.IC.FF.MOTORIZED"] = {
         "type": "path",
-        "d": "M 57.5,57.5 L 142.5,142.5 M 142.5,57.5 L 57.5,142.5"
-        if affiliation == "Hostile"
-        else "M 25,50 L 175,150 M 175,50 L 25,150",
+        "d": "M100,"
+        + str(baseGeometry["bbox"].y1)
+        + "L100,"
+        + str(baseGeometry["bbox"].y2),
         "fill": False,
     }
-    icn["GR.IC.FF.MOTORIZED"] = {"type": "path", "d": "M 100,60 100,140", "fill": False}
     icn["GR.IC.FF.RECONNAISSANCE"] = {
-        "type": "path",
-        "d": "M 57.5,142.5 L 142.5,57.5"
-        if affiliation == "Hostile"
-        else "M 140,80 60,120",
-        "fill": False,
-    }
+        "Unknown": {"type": "path", "d": "M50,135L150,65"},
+        "Friend": {"type": "path", "d": "M25,150L175,50"},
+        "Neutral": {"type": "path", "d": "M45,155L155,45"},
+        "Hostile": {"type": "path", "d": "M60,130L140,70"},
+    }.get(affiliation)
     icn["GR.IC.FF.AMPHIBIOUS"] = {
         "type": "path",
         "d": "M 75,120 c 5,-5 10,-5 15,0 5,5 10,5 15,0 5,-5 10,-5 15,0 5,5 10,5 15,0",
@@ -3087,21 +3092,39 @@ def ground(ms, iconParts, metadata, colors, STD2525, monoColor, alternateMedal):
     }
     icn["GR.IC.FF.RECONNAISSANCE EQUIPMENT"] = icn["GR.IC.FF.RECONNAISSANCE"]
     icn["GR.IC.FF.SIGNAL"] = {
+        "Unknown": {
+            "type": "path",
+            "fill": False,
+            "d": "M50,65 100,110 100,90 150,135",
+        },
+        "Friend": {"type": "path", "fill": False, "d": "M25,50 100,110 100,90 175,150"},
+        "Neutral": {
+            "type": "path",
+            "fill": False,
+            "d": "M45,45 100,110 100,90 155,155",
+        },
+        "Hostile": {
+            "type": "path",
+            "fill": False,
+            "d": "M57,70 100,110 100,90 143,130",
+        },
+    }.get(affiliation)
+    icn["GR.IC.FF.BROADCAST TRANSMITTER ANTENNA"] = {
         "type": "path",
-        "d": "M 25,50 L 100,110 L 100,90 L 175,150",
+        "d": "m 80,60 20,20 20,-20 m -20,0 0,80",
         "fill": False,
     }
-    icn["GR.IC.FF.BROADCAST TRANSMITTER ANTENNA"] = icn["GR.IC.FF.SIGNAL"]
     icn["GR.IC.FF.SUPPLY"] = {
         "type": "path",
         "d": "M 60,100 l 80,0 M 100,60 l 0,80",
         "fill": False,
     }
     icn["GR.IC.FF.ANTITANK/ANTIARMOUR"] = {
-        "type": "path",
-        "d": "M 60,120 100,80 140,120",
-        "fill": False,
-    }
+        "Unknown": {"type": "path", "fill": False, "d": "M55,135 L100,33 145,135"},
+        "Friend": {"type": "path", "fill": False, "d": "M25,150 L100,52 175,150"},
+        "Neutral": {"type": "path", "fill": False, "d": "M45,150 L100,47 155,150"},
+        "Hostile": {"type": "path", "fill": False, "d": "M60,132 L100,30 140,132"},
+    }.get(affiliation)
 
     icn["GR.IC.FF.NAVAL"] = {
         "type": "path",
@@ -3113,9 +3136,23 @@ def ground(ms, iconParts, metadata, colors, STD2525, monoColor, alternateMedal):
         icn[f"GR.IC.FF.CLASS {r}"] = text(r)
 
     icn["GR.IC.FF.MAIN GUN SYSTEM"] = {
+        "Unknown": {"type": "path", "d": "M55,65L55,135"},
+        "Friend": {"type": "path", "d": "M55,50L55,150"},
+        "Neutral": {"type": "path", "d": "M55,45L55,155"},
+        "Hostile": {"type": "path", "d": "M55,72L55,128"},
+    }.get(affiliation)
+
+    icn["GR.IC.FF.MEDICAL"] = {
         "type": "path",
-        "d": "M 100,80 100,50",
-        "fill": False,
+        "d": "M100,"
+        + str(baseGeometry["bbox"].y1)
+        + "L100,"
+        + str(baseGeometry["bbox"].y2)
+        + "M"
+        + str(baseGeometry["bbox"].x1)
+        + ",100L"
+        + str(baseGeometry["bbox"].x2)
+        + ",100",
     }
 
     missing_keys = [
@@ -3134,7 +3171,7 @@ def ground(ms, iconParts, metadata, colors, STD2525, monoColor, alternateMedal):
         "INTERCEPT",
         "JAMMING",
         "LAW ENFORCEMENT",
-        "MEDICAL",
+        # "MEDICAL",
         "MEDICAL CORPS",
         "MEDICAL THEATER",
         "MEDICAL TREATMENT FACILITY",

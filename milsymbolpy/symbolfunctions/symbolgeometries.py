@@ -15,8 +15,8 @@ def load_symbol_geometries(ms):
     # Ground Hostile (Diamond)
     # Standard 1:1 Diamond
     ms._symbolGeometries["GroundHostile"] = {
-        "g": {"type": "path", "d": "M 100,15 L 185,100 L 100,185 L 15,100 Z"},
-        "bbox": BBox({"x1": 15, "y1": 15, "x2": 185, "y2": 185}),
+        "g": {"type": "path", "d": "M 100,28 L172,100 100,172 28,100 100,28 Z"},
+        "bbox": BBox({"x1": 28, "y1": 28, "x2": 28 + 144, "y2": 28 + 144}),
     }
 
     # Ground Neutral (Square)
