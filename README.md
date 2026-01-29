@@ -125,13 +125,13 @@ This port was done using [Antigravity](https://antigravity.google/) and Gemini 3
 
 >"I found that Antigravity was able to generate a lot of the code, but it was not able to generate the correct code for the SVG paths.  I had to manually edit the code to get it to work."
 
-(That last sentence was a code-completion suggewtion made by Antigravity based on the session history.  It's pretty accurate!)
+(That last sentence was a code-completion suggestion made by Antigravity based on the session history.  It's pretty accurate!)
 
 The biggest problem was with Gemini porting the very large files like [ground.py](milsymbolpy/iconparts/ground.py) due to an output token limit of 4096 tokens. This was because Antigravity was in preview status when milsymbol-py was ported; this limit will be fized in future versions. I ended up porting the very large files manually and let Gemini do the rest.
 
 There were numerous other smaller problems:
 
-* Though told to port the entire javascript code base, it had to be reminded to include various chunks of functionality.
+* Though told to port the entire javascript code base, it had to be reminded to include various chunks of functionality.  It did a sort of "happy path" port first and then asked if I wanted it to continue.
 * It frequently wrote small throw-away evaluation scripts in the root directory, but did not clean them up until told to.
 * Unless instructed, it often did not actually evaluate the correctness of the resulting image, even though it claimed to.  This most often occurred when it missed a sector 1 or sector 2 modifier but was absolutely convinced it had included it.
 
