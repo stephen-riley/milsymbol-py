@@ -594,7 +594,7 @@ class Symbol:
         else:
             return None
 
-    def get_desc(self):
+    def get_desc_pieces(self):
         """
         Returns a human-readable description for the symbol.
         Format: "<Alignment> <Sector 1 modifier>, <Sector 2 modifier> <Entity type> <Entity> <Echelon/size>"
@@ -618,6 +618,8 @@ class Symbol:
         entity_name = ""
         modifiers = []
         echelon = ""
+        mod1 = None
+        mod2 = None
 
         # 1. Alignment
         alignment = alignments[sidc[2:4]]
@@ -689,7 +691,7 @@ class Symbol:
             echelon = echelon_map[echelon_mobility]
 
         # Construct Name
-        # Format: "[alignment] entity, entity_type [sector1 modifier, sector2 modifier] (echelon)"
+        # Format: "[alignment] entity, entity_type sector1 modifier, sector2 modifier (echelon)"
         parts = [alignment]
         if modifiers:
             parts.append(', '.join(modifiers))
@@ -703,8 +705,23 @@ class Symbol:
         if not parts:
             return "{unknown symbol}"
 
-        return " ".join(parts)
+        return {
+            'alignment': alignment,
+            'entity': entity_name,
+            'modifier1': mod1.name if mod1 else None,
+            'modifier2': mod2.name if mod2 else None,
+            'echelon': echelon if echelon != '' else None
+        }
 
+    def get_desc(self):
+        desc = ''
+        p = self.get_desc_pieces()
+        els_in_order = ['alignment', 'modifier1', 'modifier2', 'entity', 'echelon']
+        for el in els_in_order:
+            if p[el]: 
+                desc = desc + f" {p[el]}"
+        return desc.strip()
+    
     def toDataURL(self):
         # Renders SVG to Data URL (base64)
         # But user wants PNG export.
